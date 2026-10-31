@@ -1,0 +1,16 @@
+{"id": "ex-00", "principal": "srn:stratus:iam::222233334444:user/pat", "action": "storage:GetObject", "resource": "srn:stratus:storage:::team-share/plan.txt", "context": {}}
+{"id": "ex-01", "principal": "srn:stratus:iam::222233334444:user/pat", "action": "storage:DeleteObject", "resource": "srn:stratus:storage:::team-share/plan.txt", "context": {"stratus:MultiFactorAuthPresent": "true"}}
+{"id": "ex-02", "principal": "srn:stratus:iam::222233334444:user/pat", "action": "storage:DeleteObject", "resource": "srn:stratus:storage:::team-share/plan.txt", "context": {"stratus:MultiFactorAuthPresent": "false"}}
+{"id": "ex-03", "principal": "srn:stratus:iam::222233334444:user/pat", "action": "storage:DeleteObject", "resource": "srn:stratus:storage:::team-share/plan.txt", "context": {}}
+{"id": "ex-04", "principal": "srn:stratus:iam::222233334444:user/pat", "action": "Storage:putobject", "resource": "srn:stratus:storage:::team-share/plan.txt", "context": {}}
+{"id": "ex-05", "principal": "srn:stratus:iam::222233334444:user/pat", "action": "storage:PutObject", "resource": "srn:stratus:storage:::other/x", "context": {}}
+{"id": "ex-06", "principal": "srn:stratus:iam::222233334444:user/pat", "action": "billing:ViewInvoice", "resource": "*", "context": {}}
+{"id": "ex-07", "principal": "srn:stratus:iam::222233334444:user/sam", "action": "storage:PutObject", "resource": "srn:stratus:storage:::team-share/plan.txt", "context": {}}
+{"id": "ex-08", "principal": "srn:stratus:iam::222233334444:user/sam", "action": "db:Query", "resource": "srn:stratus:db:eu-west-1:222233334444:table/local", "context": {}}
+{"id": "ex-09", "principal": "srn:stratus:iam::222233334444:user/lee", "action": "storage:GetObject", "resource": "srn:stratus:storage:::team-share/plan.txt", "context": {}}
+{"id": "ex-10", "principal": "srn:stratus:iam::222233334444:user/lee", "action": "storage:PutObject", "resource": "srn:stratus:storage:::team-share/plan.txt", "context": {}}
+{"id": "ex-11", "principal": "srn:stratus:iam::222233334444:user/pat", "action": "db:Query", "resource": "srn:stratus:db:eu-west-1:555566667777:table/catalog", "context": {}}
+{"id": "ex-12", "principal": "srn:stratus:iam::222233334444:user/pat", "action": "db:Scan", "resource": "srn:stratus:db:eu-west-1:555566667777:table/catalog", "context": {}}
+{"id": "ex-13", "principal": "srn:stratus:iam::222233334444:role/batch", "action": "db:Scan", "resource": "srn:stratus:db:eu-west-1:555566667777:table/catalog", "context": {"stratus:SourceIp": "10.20.30.40"}}
+{"id": "ex-14", "principal": "srn:stratus:iam::222233334444:role/batch", "action": "db:Scan", "resource": "srn:stratus:db:eu-west-1:555566667777:table/catalog", "context": {"stratus:SourceIp": "192.0.2.10"}}
+{"id": "ex-15", "principal": "srn:stratus:iam::222233334444:role/batch", "action": "db:PutItem", "resource": "srn:stratus:db:eu-west-1:555566667777:table/catalog", "context": {"stratus:SourceIp": "10.20.30.40"}}

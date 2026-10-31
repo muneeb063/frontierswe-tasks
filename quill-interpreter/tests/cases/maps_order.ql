@@ -1,0 +1,11 @@
+let m = {"b": 1, "a": 2};
+m["c"] = 3;
+m["b"] = 10;
+print(m, keys(m), len(m));
+let k = {};
+k[1] = "int"; k[true] = "bool"; k["1"] = "str"; k[nil] = "nil"; k[false] = "f"; k[0] = "zero";
+print(k, len(k));
+print(k[1], k[true], k["1"], k[nil], k[0], k[false]);
+print(has(k, 1), has(k, 2), has(k, "true"), has({}, nil));
+let d = {"x": 1, "x": 2, "y": 3};
+print(d);

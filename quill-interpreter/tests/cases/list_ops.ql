@@ -1,0 +1,16 @@
+let a = [3, 1, 2];
+push(a, 9);
+print(a, len(a), pop(a), a);
+let b = a;
+push(b, "shared");
+print(a);
+let c = a + [7];
+push(c, 8);
+print(a, c);
+print(range(5), range(2, 6), range(5, 2), range(0));
+print(slice([1, 2, 3, 4], 1, 3), slice([1], 0, 0), slice("hello", 1, 4));
+print(join(["a", "b", "c"], "-"), join([], ","), join(["solo"], ", "));
+print(split("a,,b", ","), split("", ","), split("abc", ""), split("one two", " "));
+let nested = [[0, 0], [0, 0]];
+nested[1][0] = 5;
+print(nested);

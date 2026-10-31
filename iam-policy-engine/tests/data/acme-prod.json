@@ -1,0 +1,579 @@
+{
+ "account_id": "111122223333",
+ "managed_policies": {
+  "srn:stratus:iam::111122223333:policy/AdminAccess": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Allow",
+     "Action": "*",
+     "Resource": "*"
+    }
+   ]
+  },
+  "srn:stratus:iam::111122223333:policy/ReadOnly": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Allow",
+     "Action": [
+      "storage:Get*",
+      "storage:List*",
+      "compute:Describe*",
+      "db:Query",
+      "db:Scan",
+      "logs:Get*",
+      "iam:Get*",
+      "iam:List*"
+     ],
+     "Resource": "*"
+    }
+   ]
+  },
+  "srn:stratus:iam::111122223333:policy/DevBoundary": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Allow",
+     "Action": [
+      "storage:*",
+      "compute:*",
+      "db:*",
+      "logs:*",
+      "kms:Decrypt",
+      "kms:GenerateDataKey"
+     ],
+     "Resource": "*"
+    },
+    {
+     "Effect": "Allow",
+     "Action": [
+      "iam:GetUser",
+      "iam:CreateAccessKey"
+     ],
+     "Resource": "srn:stratus:iam::111122223333:user/${stratus:username}"
+    }
+   ]
+  },
+  "srn:stratus:iam::111122223333:policy/HomeFolder": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Allow",
+     "Action": [
+      "storage:GetObject",
+      "storage:PutObject",
+      "storage:DeleteObject"
+     ],
+     "Resource": "srn:stratus:storage:::home/${stratus:username}/*"
+    },
+    {
+     "Effect": "Allow",
+     "Action": "storage:ListBucket",
+     "Resource": "srn:stratus:storage:::home",
+     "Condition": {
+      "StringLike": {
+       "stratus:prefix": [
+        "${stratus:username}/*",
+        "${stratus:username}"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  "srn:stratus:iam::111122223333:policy/TeamABAC": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Allow",
+     "Action": [
+      "compute:StartInstance",
+      "compute:StopInstance",
+      "compute:CreateSnapshot"
+     ],
+     "Resource": "srn:stratus:compute:eu-west-1:111122223333:instance/*",
+     "Condition": {
+      "StringEquals": {
+       "stratus:ResourceTag/team": "${stratus:PrincipalTag/team}"
+      }
+     }
+    },
+    {
+     "Effect": "Allow",
+     "Action": "compute:DescribeInstances",
+     "Resource": "*"
+    }
+   ]
+  },
+  "srn:stratus:iam::111122223333:policy/RequireMFA": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Deny",
+     "Action": [
+      "compute:TerminateInstance",
+      "storage:DeleteObject",
+      "db:DeleteTable",
+      "logs:DeleteLogGroup",
+      "iam:DeleteUser"
+     ],
+     "Resource": "*",
+     "Condition": {
+      "BoolIfExists": {
+       "stratus:MultiFactorAuthPresent": false
+      }
+     }
+    }
+   ]
+  },
+  "srn:stratus:iam::111122223333:policy/OfficeOnly": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Deny",
+     "Action": "*",
+     "Resource": "*",
+     "Condition": {
+      "NotIpAddress": {
+       "stratus:SourceIp": [
+        "203.0.113.0/24",
+        "198.51.100.7"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  "srn:stratus:iam::111122223333:policy/DataAnalyst": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Allow",
+     "Action": [
+      "db:Query",
+      "db:Scan"
+     ],
+     "Resource": "srn:stratus:db:eu-west-1:111122223333:table/analytics_*"
+    },
+    {
+     "Effect": "Allow",
+     "Action": "kms:Decrypt",
+     "Resource": "srn:stratus:kms:eu-west-1:111122223333:key/*",
+     "Condition": {
+      "ForAllValues:StringEquals": {
+       "stratus:EncryptionContextKeys": [
+        "dataset",
+        "purpose"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  "srn:stratus:iam::111122223333:policy/Contractor": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Allow",
+     "Action": [
+      "storage:GetObject",
+      "storage:ListBucket"
+     ],
+     "Resource": [
+      "srn:stratus:storage:::vendor-drop",
+      "srn:stratus:storage:::vendor-drop/*"
+     ],
+     "Condition": {
+      "DateGreaterThanEquals": {
+       "stratus:CurrentTime": "2026-06-01T00:00:00Z"
+      },
+      "DateLessThan": {
+       "stratus:CurrentTime": "2026-12-31T23:59:59Z"
+      }
+     }
+    }
+   ]
+  },
+  "srn:stratus:iam::111122223333:policy/CIDeploy": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Allow",
+     "Action": "storage:PutObject",
+     "Resource": "srn:stratus:storage:::artifacts/*"
+    },
+    {
+     "Effect": "Allow",
+     "Action": "compute:*",
+     "Resource": "srn:stratus:compute:*:111122223333:instance/*",
+     "Condition": {
+      "StringEquals": {
+       "stratus:RequestTag/env": "staging"
+      }
+     }
+    },
+    {
+     "Effect": "Allow",
+     "Action": "iam:PassRole",
+     "Resource": "srn:stratus:iam::111122223333:role/app-*",
+     "Condition": {
+      "StringEquals": {
+       "stratus:PassedToService": "compute"
+      },
+      "NumericLessThanEquals": {
+       "stratus:TokenAgeSeconds": 3600
+      }
+     }
+    }
+   ]
+  }
+ },
+ "groups": {
+  "developers": {
+   "policies": [
+    "srn:stratus:iam::111122223333:policy/ReadOnly",
+    "srn:stratus:iam::111122223333:policy/HomeFolder",
+    "srn:stratus:iam::111122223333:policy/TeamABAC"
+   ],
+   "inline": [
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Allow",
+       "Action": "logs:PutLogEvents",
+       "Resource": "srn:stratus:logs:*:111122223333:log-group/dev-*"
+      }
+     ]
+    }
+   ]
+  },
+  "admins": {
+   "policies": [
+    "srn:stratus:iam::111122223333:policy/AdminAccess",
+    "srn:stratus:iam::111122223333:policy/RequireMFA"
+   ]
+  },
+  "analysts": {
+   "policies": [
+    "srn:stratus:iam::111122223333:policy/DataAnalyst",
+    "srn:stratus:iam::111122223333:policy/HomeFolder"
+   ]
+  },
+  "contractors": {
+   "policies": [
+    "srn:stratus:iam::111122223333:policy/Contractor",
+    "srn:stratus:iam::111122223333:policy/OfficeOnly"
+   ]
+  }
+ },
+ "users": {
+  "alice": {
+   "groups": [
+    "admins"
+   ],
+   "tags": {
+    "role": "security",
+    "team": "platform"
+   }
+  },
+  "bob": {
+   "groups": [
+    "developers"
+   ],
+   "boundary": "srn:stratus:iam::111122223333:policy/DevBoundary",
+   "tags": {
+    "team": "payments"
+   }
+  },
+  "carol": {
+   "groups": [
+    "developers",
+    "analysts"
+   ],
+   "boundary": "srn:stratus:iam::111122223333:policy/DevBoundary",
+   "tags": {
+    "team": "data"
+   },
+   "inline": [
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Deny",
+       "Action": "storage:*",
+       "Resource": "srn:stratus:storage:::finance-ledger/*"
+      }
+     ]
+    }
+   ]
+  },
+  "dave": {
+   "groups": [
+    "contractors"
+   ]
+  },
+  "erin": {
+   "groups": [
+    "analysts"
+   ],
+   "tags": {
+    "team": "ml*"
+   },
+   "inline": [
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Allow",
+       "Action": "db:PutItem",
+       "Resource": "srn:stratus:db:eu-west-1:111122223333:table/${stratus:PrincipalTag/team}_*"
+      }
+     ]
+    }
+   ]
+  },
+  "frank": {},
+  "gus": {
+   "groups": [
+    "admins"
+   ],
+   "boundary": "srn:stratus:iam::111122223333:policy/ReadOnly",
+   "tags": {
+    "team": "payments"
+   }
+  }
+ },
+ "roles": {
+  "ci-deployer": {
+   "policies": [
+    "srn:stratus:iam::111122223333:policy/CIDeploy"
+   ],
+   "tags": {
+    "team": "platform"
+   }
+  },
+  "app-backend": {
+   "inline": [
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Allow",
+       "Action": [
+        "db:Query",
+        "db:PutItem"
+       ],
+       "Resource": "srn:stratus:db:eu-west-1:111122223333:table/orders"
+      },
+      {
+       "Effect": "Allow",
+       "Action": "storage:GetObject",
+       "Resource": "srn:stratus:storage:::assets/*"
+      },
+      {
+       "Effect": "Allow",
+       "Action": "kms:Decrypt",
+       "Resource": "srn:stratus:kms:*:444455556666:key/*"
+      },
+      {
+       "Effect": "Allow",
+       "Action": [
+        "db:Query",
+        "db:Scan"
+       ],
+       "Resource": "srn:stratus:db:*:444455556666:table/*"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "resources": {
+  "srn:stratus:storage:::finance-ledger/2026/ledger.csv": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": "storage:GetObject",
+      "Resource": "*",
+      "Principal": {
+       "Stratus": "srn:stratus:iam::111122223333:user/frank"
+      }
+     }
+    ]
+   },
+   "tags": {
+    "classification": "restricted"
+   }
+  },
+  "srn:stratus:storage:::reports/q3.pdf": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": "storage:GetObject",
+      "Resource": "*",
+      "Condition": {
+       "StringEquals": {
+        "stratus:PrincipalAccount": "111122223333"
+       }
+      },
+      "Principal": "*"
+     },
+     {
+      "Effect": "Deny",
+      "Action": "storage:DeleteObject",
+      "Resource": "*",
+      "Principal": "*"
+     }
+    ]
+   }
+  },
+  "srn:stratus:compute:eu-west-1:111122223333:instance/i-pay1": {
+   "tags": {
+    "team": "payments"
+   }
+  },
+  "srn:stratus:compute:eu-west-1:111122223333:instance/i-data1": {
+   "tags": {
+    "team": "data"
+   }
+  },
+  "srn:stratus:compute:eu-west-1:111122223333:instance/i-plat1": {
+   "tags": {
+    "team": "platform"
+   }
+  },
+  "srn:stratus:kms:eu-west-1:111122223333:key/main": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": [
+       "kms:Encrypt",
+       "kms:Decrypt"
+      ],
+      "Resource": "*",
+      "Condition": {
+       "StringEquals": {
+        "stratus:ViaService": "storage"
+       }
+      },
+      "Principal": {
+       "Stratus": "111122223333"
+      }
+     }
+    ]
+   }
+  },
+  "srn:stratus:db:eu-west-1:444455556666:table/shared_metrics": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": [
+       "db:Query",
+       "db:Scan"
+      ],
+      "Resource": "*",
+      "Principal": {
+       "Stratus": "srn:stratus:iam::111122223333:root"
+      }
+     }
+    ]
+   }
+  },
+  "srn:stratus:kms:eu-west-1:444455556666:key/partner": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": "kms:Decrypt",
+      "Resource": "*",
+      "Principal": {
+       "Stratus": [
+        "srn:stratus:iam::111122223333:role/app-backend"
+       ]
+      }
+     }
+    ]
+   }
+  }
+ },
+ "org_policies": [
+  [
+   {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": "*",
+      "Resource": "*"
+     }
+    ]
+   },
+   {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Deny",
+      "NotAction": [
+       "iam:*",
+       "billing:*"
+      ],
+      "Resource": "*",
+      "Condition": {
+       "StringNotEqualsIfExists": {
+        "stratus:RequestedRegion": [
+         "eu-west-1",
+         "eu-central-1"
+        ]
+       }
+      }
+     }
+    ]
+   },
+   {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Deny",
+      "Action": "kms:ScheduleKeyDeletion",
+      "Resource": "*",
+      "Condition": {
+       "StringNotEquals": {
+        "stratus:PrincipalTag/role": "security"
+       }
+      }
+     }
+    ]
+   }
+  ],
+  [
+   {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": [
+       "storage:*",
+       "compute:*",
+       "iam:*",
+       "kms:*",
+       "db:*",
+       "logs:*"
+      ],
+      "Resource": "*"
+     }
+    ]
+   }
+  ]
+ ]
+}

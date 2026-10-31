@@ -1,0 +1,1265 @@
+{
+ "account_id": "111122223333",
+ "managed_policies": {
+  "srn:stratus:iam::111122223333:policy/P0": {
+   "Version": "2024-01-01",
+   "Statement": {
+    "Effect": "Deny",
+    "Action": [
+     "*",
+     "db:*",
+     "kms:ScheduleKeyDeletion"
+    ],
+    "Resource": [
+     "srn:stratus:*:*:444455556666:*",
+     "srn:stratus:storage:::home/${stratus:username}${*}"
+    ]
+   }
+  },
+  "srn:stratus:iam::111122223333:policy/P1": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Allow",
+     "Action": [
+      "storage:Put*",
+      "iam:*",
+      "*"
+     ],
+     "Resource": "srn:stratus:storage:::home/${stratus:username}${*}",
+     "Condition": {
+      "StringNotEquals": {
+       "stratus:RequestedRegion": [
+        "eu-west-1",
+        "eu-central-1"
+       ]
+      }
+     }
+    },
+    {
+     "Effect": "Allow",
+     "Action": [
+      "compute:TerminateInstance",
+      "*"
+     ],
+     "Resource": "srn:stratus:iam::111122223333:user/${stratus:username}"
+    },
+    {
+     "Effect": "Allow",
+     "Action": "kms:?ecrypt",
+     "Resource": "srn:stratus:storage:::home/${stratus:username}${*}",
+     "Condition": {
+      "StringEquals": {
+       "stratus:Department": [
+        "${stratus:PrincipalTag/dept}"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  "srn:stratus:iam::111122223333:policy/P2": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Allow",
+     "Action": "*",
+     "Resource": "*"
+    }
+   ]
+  },
+  "srn:stratus:iam::111122223333:policy/P3": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Deny",
+     "Action": "db:Query",
+     "Resource": [
+      "*",
+      "srn:stratus:iam::111122223333:user/${stratus:username}"
+     ],
+     "Condition": {
+      "StringEqualsAnyCase": {
+       "stratus:Department": [
+        "x"
+       ]
+      },
+      "BoolIfExists": {
+       "stratus:MultiFactorAuthPresent": "false"
+      }
+     }
+    },
+    {
+     "Effect": "Allow",
+     "Action": "kms:?ncrypt",
+     "Resource": [
+      "srn:stratus:storage:::home/${stratus:username}/*",
+      "srn:stratus:db:eu-west-1:111122223333:table/x*y_ta*"
+     ]
+    },
+    {
+     "Effect": "Allow",
+     "Action": [
+      "*:TerminateInstance",
+      "*",
+      "*"
+     ],
+     "Resource": "srn:stratus:storage:::home/${stratus:username}/*",
+     "Condition": {
+      "StringLike": {
+       "stratus:UserAgent": [
+        "cli/*",
+        "sdk-?/*"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  "srn:stratus:iam::111122223333:policy/P4": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Allow",
+     "Action": [
+      "STORAGE:listbucket",
+      "*",
+      "compute:*"
+     ],
+     "Resource": [
+      "srn:stratus:storage:::public/index.ht*",
+      "srn:stratus:storage:::home/${stratus:username}${*}"
+     ],
+     "Condition": {
+      "ForAnyValue:StringNotEquals": {
+       "stratus:Tags": "internal"
+      }
+     }
+    },
+    {
+     "Effect": "Allow",
+     "Action": "db:DeleteTable",
+     "Resource": "srn:str?tus:storage:::home/ana/deep/b.txt",
+     "Condition": {
+      "StringEquals": {
+       "stratus:Tags": "pii"
+      }
+     }
+    }
+   ]
+  },
+  "srn:stratus:iam::111122223333:policy/P5": {
+   "Version": "2024-01-01",
+   "Statement": {
+    "Effect": "Allow",
+    "Action": [
+     "*:DescribeInstances",
+     "kms:*"
+    ],
+    "Resource": "srn:str?tus:storage:::home/ana/a.txt"
+   }
+  },
+  "srn:stratus:iam::111122223333:policy/P6": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Allow",
+     "Action": "*:DeleteObject",
+     "Resource": "srn:stratus:db:eu-west-1:111122223333:table/${stratus:PrincipalTag/team}_*"
+    },
+    {
+     "Effect": "Allow",
+     "Action": [
+      "kms:GenerateDataKey",
+      "db:Query"
+     ],
+     "Resource": "srn:stratus:storage:::public/index.html"
+    }
+   ]
+  },
+  "srn:stratus:iam::111122223333:policy/P7": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Deny",
+     "Action": "*",
+     "Resource": [
+      "srn:stratus:storage:::hom*",
+      "srn:str?tus:storage:::home/dee/a.txt"
+     ]
+    },
+    {
+     "Effect": "Allow",
+     "Action": [
+      "db:Put*",
+      "*"
+     ],
+     "Resource": [
+      "*",
+      "srn:stratus:iam::111122223333:user/${stratus:username}"
+     ],
+     "Condition": {
+      "StringNotEqualsIfExists": {
+       "stratus:RequestedRegion": "eu-west-1"
+      }
+     }
+    },
+    {
+     "Effect": "Allow",
+     "Action": [
+      "db:*",
+      "db:DeleteTable",
+      "kms:Enc*"
+     ],
+     "Resource": "srn:stratus:storage:::public/index.html",
+     "Condition": {
+      "StringLike": {
+       "stratus:UserAgent": [
+        "cli/*",
+        "sdk-?/*"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  "srn:stratus:iam::111122223333:policy/Wide": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Allow",
+     "Action": "*",
+     "Resource": "*"
+    }
+   ]
+  }
+ },
+ "groups": {
+  "g0": {
+   "policies": [
+    "srn:stratus:iam::111122223333:policy/P1",
+    "srn:stratus:iam::111122223333:policy/P2"
+   ],
+   "inline": []
+  },
+  "g1": {
+   "policies": [],
+   "inline": [
+    {
+     "Version": "2024-01-01",
+     "Statement": {
+      "Effect": "Allow",
+      "Action": [
+       "*:PutObject",
+       "*"
+      ],
+      "Resource": "srn:stratus:storage:::home/${stratus:username}/*"
+     }
+    }
+   ]
+  },
+  "g2": {
+   "policies": [],
+   "inline": [
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Allow",
+       "NotAction": "iam:DeleteUser",
+       "Resource": "srn:stratus:iam::111122223333:user/${stratus:username}",
+       "Condition": {
+        "StringNotEqualsIgnoreCase": {
+         "stratus:Department": "finance"
+        }
+       }
+      },
+      {
+       "Effect": "Deny",
+       "Action": [
+        "*",
+        "storage:GetObject",
+        "*:DescribeInstances"
+       ],
+       "Resource": "srn:stratus:storage:::home/${stratus:username}/*",
+       "Condition": {
+        "NumericLessThanEqualsIfExists": {
+         "stratus:TokenAge": 600
+        },
+        "Null": {
+         "stratus:SourceIp": true
+        }
+       }
+      },
+      {
+       "Effect": "Deny",
+       "Action": [
+        "kms:Encrypt",
+        "IAM:passrole"
+       ],
+       "Resource": [
+        "srn:stratus:compute:eu-west-1:111122223333:instance/i-${stratus:PrincipalTag/team}",
+        "srn:stratus:compute:eu-west-1:111122223333:instance/i-red"
+       ],
+       "Condition": {
+        "StringLike": {
+         "stratus:prefix": "${stratus:username}/*"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "users": {
+  "ana": {
+   "groups": [
+    "g1",
+    "g2"
+   ],
+   "policies": [
+    "srn:stratus:iam::111122223333:policy/Wide",
+    "srn:stratus:iam::111122223333:policy/P7"
+   ],
+   "inline": [],
+   "boundary": "srn:stratus:iam::111122223333:policy/Wide",
+   "tags": {
+    "dept": "eng",
+    "team": "green"
+   }
+  },
+  "ben": {
+   "groups": [
+    "g2"
+   ],
+   "policies": [],
+   "inline": [
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Deny",
+       "Action": [
+        "iam:?reateUser",
+        "*"
+       ],
+       "Resource": "srn:stratus:storage:::home/${stratus:username}${*}",
+       "Condition": {
+        "StringNotEquals": {
+         "stratus:RequestedRegion": [
+          "eu-west-1",
+          "eu-central-1"
+         ]
+        }
+       }
+      },
+      {
+       "Effect": "Allow",
+       "Action": [
+        "*",
+        "COMPUTE:terminateinstance",
+        "*:DescribeInstances"
+       ],
+       "NotResource": "srn:stratus:compute:eu-west-1:111122223333:instance/i-${stratus:PrincipalTag/team}"
+      },
+      {
+       "Effect": "Deny",
+       "Action": "compute:DescribeInstances",
+       "Resource": "srn:stratus:storage:::home/*/a.txt"
+      }
+     ]
+    },
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Allow",
+       "Action": "iam:PassRole",
+       "Resource": [
+        "srn:stratus:iam::111122223333:user/ben",
+        "srn:stratus:iam::111122223333:user/ana"
+       ]
+      },
+      {
+       "Effect": "Deny",
+       "Action": [
+        "iam:CreateAccessKey",
+        "db:*",
+        "*:StopInstance"
+       ],
+       "Resource": [
+        "srn:stratus:iam::111122223333:user/${stratus:username}",
+        "srn:stratus:iam::111122223333:user/${stratus:username}"
+       ],
+       "Condition": {
+        "NumericLessThanEqualsIfExists": {
+         "stratus:TokenAge": 600
+        }
+       }
+      },
+      {
+       "Effect": "Allow",
+       "Action": [
+        "kms:Encrypt",
+        "*",
+        "KMS:encrypt"
+       ],
+       "Resource": [
+        "srn:stratus:storage:::secret/keys.txt",
+        "srn:stratus:*:*:444455556666:*"
+       ],
+       "Condition": {
+        "DateLessThan": {
+         "stratus:CurrentTime": [
+          "2026-11-01T00:00:00Z"
+         ]
+        }
+       }
+      }
+     ]
+    }
+   ],
+   "boundary": "srn:stratus:iam::111122223333:policy/P4",
+   "tags": {
+    "dept": "eng",
+    "team": "green"
+   }
+  },
+  "cy": {
+   "groups": [],
+   "policies": [
+    "srn:stratus:iam::111122223333:policy/P1"
+   ],
+   "inline": [
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Allow",
+       "Action": "compute:*",
+       "Resource": [
+        "srn:stratus:compute:eu-west-1:111122223333:instance/i-${stratus:PrincipalTag/team}",
+        "srn:stratus:storage:::home/${stratus:username}/*"
+       ]
+      }
+     ]
+    },
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Deny",
+       "Action": [
+        "compute:TerminateInstance",
+        "storage:?utObject",
+        "compute:*"
+       ],
+       "Resource": [
+        "srn:stratus:compute:eu-west-1:111122223333:instance/i-${stratus:PrincipalTag/team}",
+        "srn:stratus:iam::111122223333:user/${stratus:username}"
+       ]
+      },
+      {
+       "Effect": "Allow",
+       "Action": [
+        "iam:GetUser",
+        "*:DeleteTable"
+       ],
+       "Resource": [
+        "srn:stratus:iam::111122223333:user/${stratus:username}",
+        "srn:str?tus:storage:::home/cy/deep/b.txt"
+       ]
+      }
+     ]
+    }
+   ],
+   "boundary": "srn:stratus:iam::111122223333:policy/P1",
+   "tags": {
+    "team": "green"
+   }
+  },
+  "dee": {
+   "groups": [
+    "g2",
+    "g1"
+   ],
+   "policies": [
+    "srn:stratus:iam::111122223333:policy/P4",
+    "srn:stratus:iam::111122223333:policy/P1"
+   ],
+   "inline": [
+    {
+     "Version": "2024-01-01",
+     "Statement": {
+      "Effect": "Allow",
+      "Action": [
+       "compute:*",
+       "kms:Dec*",
+       "IAM:deleteuser"
+      ],
+      "Resource": "srn:stratus:storage:::home/cy/a.txt",
+      "Condition": {
+       "NumericNotEquals": {
+        "stratus:TokenAge": [
+         0
+        ]
+       },
+       "NumericLessThanEqualsIfExists": {
+        "stratus:TokenAge": 600
+       }
+      }
+     }
+    }
+   ],
+   "boundary": "srn:stratus:iam::111122223333:policy/P2",
+   "tags": {}
+  },
+  "eli": {
+   "groups": [
+    "g0"
+   ],
+   "policies": [],
+   "inline": [
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Allow",
+       "Action": [
+        "IAM:deleteuser",
+        "*:Query"
+       ],
+       "NotResource": "srn:stratus:db:eu-west-1:111122223333:table/${stratus:PrincipalTag/team}_*"
+      },
+      {
+       "Effect": "Allow",
+       "Action": "*",
+       "Resource": [
+        "srn:stratus:storage:::home/*/a.txt",
+        "srn:stratus:db:eu-west-1:111122223333:table/${stratus:PrincipalTag/team}_*"
+       ]
+      },
+      {
+       "Effect": "Allow",
+       "Action": [
+        "kms:?cheduleKeyDeletion",
+        "kms:*"
+       ],
+       "Resource": [
+        "srn:stratus:storage:::home/*/a.txt",
+        "srn:stratus:iam::111122223333:user/${stratus:username}"
+       ]
+      }
+     ]
+    },
+    {
+     "Version": "2024-01-01",
+     "Statement": {
+      "Effect": "Allow",
+      "NotAction": "kms:Dec*",
+      "Resource": "srn:stratus:storage:::home/ana/deep/b.txt"
+     }
+    }
+   ],
+   "boundary": "srn:stratus:iam::111122223333:policy/Wide",
+   "tags": {}
+  },
+  "fay": {
+   "groups": [
+    "g0",
+    "g2"
+   ],
+   "policies": [
+    "srn:stratus:iam::111122223333:policy/P2"
+   ],
+   "inline": [
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Allow",
+       "Action": [
+        "kms:Gen*",
+        "storage:?utObject",
+        "*"
+       ],
+       "Resource": "srn:stratus:storage:::home/${stratus:username}${*}",
+       "Condition": {
+        "StringNotLike": {
+         "stratus:UserAgent": "*bot*"
+        },
+        "StringEqualsIfExists": {
+         "stratus:ResourceTag/env": [
+          "dev"
+         ]
+        }
+       }
+      }
+     ]
+    }
+   ],
+   "boundary": "srn:stratus:iam::111122223333:policy/Wide",
+   "tags": {
+    "team": "blue"
+   }
+  },
+  "gil": {
+   "groups": [],
+   "policies": [],
+   "inline": [
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Allow",
+       "Action": "iam:PassRole",
+       "Resource": [
+        "srn:stratus:compute:eu-west-1:111122223333:instance/i-${stratus:PrincipalTag/team}",
+        "srn:stratus:storage:::home/cy/deep/b.txt"
+       ],
+       "Condition": {
+        "NumericLessThanEqualsIfExists": {
+         "stratus:TokenAge": [
+          600
+         ]
+        },
+        "StringEquals": {
+         "stratus:Department": [
+          "${stratus:PrincipalTag/dept}"
+         ]
+        }
+       }
+      },
+      {
+       "Effect": "Deny",
+       "Action": "compute:*",
+       "Resource": "srn:stratus:db:eu-west-1:111122223333:table/${stratus:PrincipalTag/team}_*",
+       "Condition": {
+        "NotIpAddress": {
+         "stratus:SourceIp": "10.0.0.0/8"
+        }
+       }
+      },
+      {
+       "Effect": "Allow",
+       "NotAction": [
+        "storage:*",
+        "compute:TerminateInstance"
+       ],
+       "Resource": "srn:stratus:storage:::home/${stratus:username}/*",
+       "Condition": {
+        "Null": {
+         "stratus:SourceIp": true
+        }
+       }
+      }
+     ]
+    },
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Allow",
+       "Action": [
+        "storage:*",
+        "iam:CreateAccessKey",
+        "*:ListBucket"
+       ],
+       "Resource": "srn:stratus:compute:eu-west-1:111122223333:instanc*"
+      },
+      {
+       "Effect": "Allow",
+       "Action": [
+        "iam:GetUser",
+        "*",
+        "iam:Pas*"
+       ],
+       "Resource": "srn:stratus:storage:::home/dee/*",
+       "Condition": {
+        "NotIpAddress": {
+         "stratus:SourceIp": [
+          "10.0.0.0/8"
+         ]
+        }
+       }
+      },
+      {
+       "Effect": "Allow",
+       "NotAction": [
+        "kms:Encrypt",
+        "storage:Put*",
+        "*:Decrypt"
+       ],
+       "Resource": [
+        "*",
+        "srn:stratus:db:eu-west-1:111122223333:table/${stratus:PrincipalTag/team}_*"
+       ]
+      }
+     ]
+    }
+   ],
+   "boundary": null,
+   "tags": {
+    "team": "green"
+   }
+  }
+ },
+ "roles": {
+  "svc-a": {
+   "policies": [],
+   "inline": [
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Allow",
+       "Action": [
+        "*:PutItem",
+        "DB:query",
+        "kms:?enerateDataKey"
+       ],
+       "Resource": [
+        "srn:stratus:storage:::home/shared/deep/b.txt",
+        "srn:stratus:storage:::home/ana/deep*"
+       ],
+       "Condition": {
+        "StringEqualsIfExists": {
+         "stratus:ResourceTag/env": [
+          "dev"
+         ]
+        }
+       }
+      }
+     ]
+    }
+   ],
+   "boundary": null,
+   "tags": {}
+  },
+  "svc-b": {
+   "policies": [],
+   "inline": [
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Allow",
+       "Action": "iam:CreateUser",
+       "Resource": [
+        "srn:stratus:iam::111122223333:user/${stratus:username}",
+        "srn:stratus:*:*:444455556666:*"
+       ]
+      }
+     ]
+    },
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Allow",
+       "Action": [
+        "db:?can",
+        "kms:Encrypt",
+        "kms:Decrypt"
+       ],
+       "Resource": "srn:stratus:*:*:444455556666:*",
+       "Condition": {
+        "StringEquals": {
+         "stratus:Department": [
+          "${stratus:PrincipalTag/dept}"
+         ]
+        }
+       }
+      },
+      {
+       "Effect": "Allow",
+       "Action": [
+        "db:*",
+        "kms:*",
+        "db:Put*"
+       ],
+       "NotResource": [
+        "srn:stratus:db:eu-west-1:111122223333:table/green_table",
+        "srn:stratus:iam::111122223333:user/${stratus:username}"
+       ]
+      },
+      {
+       "Effect": "Allow",
+       "Action": "iam:ListUsers",
+       "Resource": "srn:stratus:*:*:444455556666:*"
+      }
+     ]
+    }
+   ],
+   "boundary": "srn:stratus:iam::111122223333:policy/Wide",
+   "tags": {
+    "team": "blue"
+   }
+  }
+ },
+ "resources": {
+  "srn:stratus:iam::111122223333:user/ben": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": "COMPUTE:terminateinstance",
+      "NotResource": [
+       "srn:stratus:iam::111122223333:role/svc-b",
+       "srn:stratus:iam::111122223333:role/svc-b"
+      ],
+      "Principal": {
+       "Stratus": "srn:stratus:iam::444455556666:user/ana"
+      }
+     },
+     {
+      "Effect": "Allow",
+      "Action": [
+       "kms:?enerateDataKey",
+       "IAM:createaccesskey",
+       "iam:Cre*"
+      ],
+      "Resource": [
+       "srn:stratus:compute:eu-west-1:111122223333:instance/i-${stratus:PrincipalTag/team}",
+       "srn:stratus:storage:::home/dee/a.txt"
+      ],
+      "Principal": {
+       "Stratus": "111122223333"
+      }
+     }
+    ]
+   },
+   "tags": {
+    "team": "blue"
+   }
+  },
+  "srn:stratus:kms:eu-west-1:111122223333:key/k1": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": [
+       "db:?can",
+       "compute:Cre*",
+       "compute:?topInstance"
+      ],
+      "Resource": [
+       "srn:stratus:storage:::home/cy/deep/b.txt",
+       "*"
+      ],
+      "Condition": {
+       "NumericLessThan": {
+        "stratus:TokenAge": 3600
+       }
+      },
+      "Principal": {
+       "Stratus": "*"
+      }
+     },
+     {
+      "Effect": "Allow",
+      "Action": [
+       "*:DeleteUser",
+       "compute:*"
+      ],
+      "Resource": [
+       "srn:stratus:compute:eu-west-1:111122223333:instance/*",
+       "srn:stratus:storage:::home/${stratus:username}${*}"
+      ],
+      "Condition": {
+       "NumericGreaterThanEquals": {
+        "stratus:TokenAge": "100.5"
+       }
+      },
+      "Principal": {
+       "Stratus": [
+        "srn:stratus:iam::111122223333:role/svc-a",
+        "srn:stratus:iam::111122223333:user/ana"
+       ]
+      }
+     }
+    ]
+   },
+   "tags": {
+    "team": "blue"
+   }
+  },
+  "srn:stratus:storage:::home": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Deny",
+      "Action": "*:StartInstance",
+      "Resource": "srn:stratus:storage:::home/${stratus:username}${*}",
+      "Principal": {
+       "Stratus": "srn:stratus:iam::444455556666:user/ana"
+      }
+     },
+     {
+      "Effect": "Allow",
+      "Action": "storage:GetObject",
+      "Resource": [
+       "srn:stratus:compute:eu-west-1:111122223333:instance/i-red",
+       "srn:stratus:storage:::home/shared/deep*"
+      ],
+      "Condition": {
+       "StringEqualsIfExists": {
+        "stratus:ResourceTag/env": "dev"
+       }
+      },
+      "Principal": "*"
+     },
+     {
+      "Effect": "Allow",
+      "NotAction": "db:*",
+      "Resource": [
+       "*",
+       "srn:str?tus:kms:eu-west-1:111122223333:key/k2"
+      ],
+      "Principal": {
+       "Stratus": "srn:stratus:iam::111122223333:user/dee"
+      }
+     }
+    ]
+   },
+   "tags": {}
+  },
+  "srn:stratus:storage:::home/ben/deep/b.txt": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": "*",
+      "Resource": "srn:stratus:storage:::home/*/a.txt",
+      "Condition": {
+       "NumericGreaterThanEquals": {
+        "stratus:TokenAge": "100.5"
+       },
+       "StringNotLike": {
+        "stratus:UserAgent": [
+         "*bot*"
+        ]
+       }
+      },
+      "Principal": {
+       "Stratus": "*"
+      }
+     }
+    ]
+   },
+   "tags": {
+    "team": "x*y"
+   }
+  },
+  "srn:stratus:db:eu-west-1:111122223333:table/red_table": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": [
+       "compute:Des*",
+       "db:?can",
+       "*:StopInstance"
+      ],
+      "Resource": [
+       "srn:stratus:compute:eu-west-1:111122223333:instance/i-${stratus:PrincipalTag/team}",
+       "srn:stratus:storage:::home/*/a.txt"
+      ]
+     },
+     {
+      "Effect": "Allow",
+      "NotAction": [
+       "DB:putitem",
+       "*:GetObject"
+      ],
+      "NotResource": "srn:str?tus:storage:::home",
+      "Principal": {
+       "Stratus": "111122223333"
+      }
+     },
+     {
+      "Effect": "Deny",
+      "Action": [
+       "storage:ListBucket",
+       "compute:Sto*"
+      ],
+      "Resource": "srn:stratus:*:*:444455556666:*",
+      "Condition": {
+       "StringEqualsIfExists": {
+        "stratus:ResourceTag/env": "dev"
+       },
+       "StringEquals": {
+        "stratus:ResourceTag/team": [
+         "${stratus:PrincipalTag/team}"
+        ]
+       }
+      },
+      "Principal": {
+       "Stratus": "111122223333"
+      }
+     }
+    ]
+   },
+   "tags": {}
+  },
+  "srn:stratus:db:eu-west-1:111122223333:table/x*y_table": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Deny",
+      "Action": [
+       "db:DeleteTable",
+       "COMPUTE:startinstance"
+      ],
+      "Resource": [
+       "srn:stratus:db:eu-west-1:111122223333:table/${stratus:PrincipalTag/team}_*",
+       "srn:stratus:storage:::home/ben/a.txt"
+      ],
+      "Condition": {
+       "ForAnyValue:StringEquals": {
+        "stratus:Tags": [
+         "pii",
+         "hipaa"
+        ]
+       }
+      },
+      "Principal": "*"
+     },
+     {
+      "Effect": "Allow",
+      "Action": [
+       "STORAGE:putobject",
+       "db:DeleteTable",
+       "KMS:decrypt"
+      ],
+      "Resource": "srn:stratus:storage:::home/${stratus:username}/*",
+      "Condition": {
+       "Null": {
+        "stratus:SourceIp": [
+         true
+        ]
+       }
+      },
+      "Principal": {
+       "Stratus": "111122223333"
+      }
+     },
+     {
+      "Effect": "Allow",
+      "NotAction": [
+       "compute:*",
+       "compute:*",
+       "compute:StartInstance"
+      ],
+      "Resource": "srn:stratus:*:*:444455556666:*",
+      "Principal": {
+       "Stratus": "srn:stratus:iam::111122223333:user/dee"
+      }
+     }
+    ]
+   },
+   "tags": {
+    "team": "red"
+   }
+  },
+  "srn:stratus:storage:::home/ana/deep/b.txt": {
+   "policy": null,
+   "tags": {}
+  },
+  "srn:stratus:kms:eu-west-1:111122223333:key/k2": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": [
+       "kms:*",
+       "compute:StartInstance"
+      ],
+      "Resource": [
+       "srn:stratus:storage:::home/ana/deep/b.txt",
+       "srn:stratus:storage:::home/ana*"
+      ],
+      "Condition": {
+       "BoolIfExists": {
+        "stratus:MultiFactorAuthPresent": [
+         "false"
+        ]
+       }
+      },
+      "Principal": "*"
+     },
+     {
+      "Effect": "Deny",
+      "Action": "*:StartInstance",
+      "Resource": [
+       "*",
+       "srn:str?tus:storage:::home/cy/deep/b.txt"
+      ],
+      "Principal": {
+       "Stratus": "111122223333"
+      }
+     },
+     {
+      "Effect": "Allow",
+      "Action": [
+       "storage:DeleteObject",
+       "KMS:generatedatakey",
+       "kms:Gen*"
+      ],
+      "NotResource": "*",
+      "Principal": {
+       "Stratus": [
+        "srn:stratus:iam::111122223333:role/svc-a",
+        "srn:stratus:iam::111122223333:user/ana"
+       ]
+      }
+     }
+    ]
+   },
+   "tags": {
+    "team": "x*y"
+   }
+  },
+  "srn:stratus:compute:eu-west-1:111122223333:instance/i-x*y": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": "iam:CreateAccessKey",
+      "Resource": "srn:stratus:compute:eu-west-1:111122223333:instance/i-blue",
+      "Condition": {
+       "NumericLessThan": {
+        "stratus:TokenAge": 3600
+       }
+      },
+      "Principal": {
+       "Stratus": "srn:stratus:iam::444455556666:user/ana"
+      }
+     },
+     {
+      "Effect": "Allow",
+      "Action": [
+       "storage:?eleteObject",
+       "iam:*",
+       "kms:Decrypt"
+      ],
+      "Resource": "srn:stratus:storage:::home/${stratus:username}${*}",
+      "Condition": {
+       "StringEquals": {
+        "stratus:ResourceTag/team": "${stratus:PrincipalTag/team}"
+       }
+      },
+      "Principal": {
+       "Stratus": "111122223333"
+      }
+     }
+    ]
+   },
+   "tags": {
+    "team": "blue"
+   }
+  },
+  "srn:stratus:storage:::home/cy/a.txt": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": [
+       "db:Del*",
+       "storage:ListBucket"
+      ],
+      "Resource": "srn:stratus:storage:::home/*/a.txt",
+      "Principal": "*"
+     },
+     {
+      "Effect": "Deny",
+      "Action": [
+       "iam:*",
+       "*"
+      ],
+      "Resource": "srn:stratus:storage:::home/ana/a.txt",
+      "Principal": "*"
+     },
+     {
+      "Effect": "Allow",
+      "Action": [
+       "storage:?eleteObject",
+       "compute:Cre*",
+       "compute:DescribeInstances"
+      ],
+      "Resource": [
+       "*",
+       "srn:stratus:storage:::home/${stratus:username}/*"
+      ],
+      "Condition": {
+       "StringEquals": {
+        "stratus:Tags": [
+         "pii"
+        ]
+       },
+       "StringEqualsIfExists": {
+        "stratus:ResourceTag/env": "dev"
+       }
+      },
+      "Principal": {
+       "Stratus": "*"
+      }
+     }
+    ]
+   },
+   "tags": {}
+  },
+  "srn:stratus:db:eu-west-1:111122223333:table/green_table": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": "*",
+      "Resource": [
+       "srn:stratus:iam::111122223333:user/${stratus:username}",
+       "srn:str?tus:db:eu-west-1:111122223333:table/x*y_table"
+      ],
+      "Principal": {
+       "Stratus": "srn:stratus:iam::111122223333:root"
+      }
+     }
+    ]
+   },
+   "tags": {}
+  },
+  "srn:stratus:iam::111122223333:user/ana": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": {
+     "Effect": "Allow",
+     "Action": [
+      "kms:Sch*",
+      "db:?utItem"
+     ],
+     "Resource": "srn:stratus:compute:eu-west-1:111122223333:instance/i-${stratus:PrincipalTag/team}",
+     "Condition": {
+      "StringNotEqualsIgnoreCase": {
+       "stratus:Department": "finance"
+      }
+     },
+     "Principal": "*"
+    }
+   },
+   "tags": {
+    "team": "red"
+   }
+  }
+ },
+ "org_policies": []
+}

@@ -1,0 +1,164 @@
+{
+ "account_id": "222233334444",
+ "managed_policies": {
+  "srn:stratus:iam::222233334444:policy/Viewer": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Allow",
+     "Action": [
+      "storage:Get*",
+      "storage:List*",
+      "db:Query"
+     ],
+     "Resource": "*"
+    }
+   ]
+  },
+  "srn:stratus:iam::222233334444:policy/NoDeleteWithoutMfa": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Deny",
+     "Action": "storage:DeleteObject",
+     "Resource": "*",
+     "Condition": {
+      "Bool": {
+       "stratus:MultiFactorAuthPresent": "false"
+      }
+     }
+    }
+   ]
+  },
+  "srn:stratus:iam::222233334444:policy/StorageOnly": {
+   "Version": "2024-01-01",
+   "Statement": [
+    {
+     "Effect": "Allow",
+     "Action": "storage:*",
+     "Resource": "*"
+    }
+   ]
+  }
+ },
+ "groups": {
+  "staff": {
+   "policies": [
+    "srn:stratus:iam::222233334444:policy/Viewer"
+   ],
+   "inline": [
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Allow",
+       "Action": [
+        "storage:PutObject",
+        "storage:DeleteObject"
+       ],
+       "Resource": "srn:stratus:storage:::team-share/*"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "users": {
+  "pat": {
+   "groups": [
+    "staff"
+   ],
+   "policies": [
+    "srn:stratus:iam::222233334444:policy/NoDeleteWithoutMfa"
+   ],
+   "tags": {
+    "team": "core"
+   }
+  },
+  "sam": {
+   "groups": [
+    "staff"
+   ],
+   "boundary": "srn:stratus:iam::222233334444:policy/StorageOnly"
+  },
+  "lee": {}
+ },
+ "roles": {
+  "batch": {
+   "inline": [
+    {
+     "Version": "2024-01-01",
+     "Statement": [
+      {
+       "Effect": "Allow",
+       "Action": "db:*",
+       "Resource": "srn:stratus:db:*:555566667777:table/*",
+       "Condition": {
+        "IpAddress": {
+         "stratus:SourceIp": "10.0.0.0/8"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "resources": {
+  "srn:stratus:storage:::team-share/plan.txt": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": "storage:GetObject",
+      "Resource": "*",
+      "Principal": {
+       "Stratus": "srn:stratus:iam::222233334444:user/lee"
+      }
+     }
+    ]
+   },
+   "tags": {
+    "team": "core"
+   }
+  },
+  "srn:stratus:db:eu-west-1:555566667777:table/catalog": {
+   "policy": {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": [
+       "db:Query",
+       "db:Scan"
+      ],
+      "Resource": "*",
+      "Principal": {
+       "Stratus": "222233334444"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "org_policies": [
+  [
+   {
+    "Version": "2024-01-01",
+    "Statement": [
+     {
+      "Effect": "Allow",
+      "Action": "*",
+      "Resource": "*"
+     },
+     {
+      "Effect": "Deny",
+      "Action": "billing:*",
+      "Resource": "*"
+     }
+    ]
+   }
+  ]
+ ]
+}

@@ -1,0 +1,302 @@
+{
+ "and_or_values": {
+  "exit": 0,
+  "stdout": "2 0 d a {} false\neval 0\neval 5\n5\neval 1\neval nil\nnil\neval \ntrue\nlast\nnil\n"
+ },
+ "arith_basic": {
+  "exit": 0,
+  "stdout": "7 9 3\n3 -4 -4 3\n1 1 -1 -1 0\n5 7 -6\n10000000000000000000000\n12499999887343749990\n45\n"
+ },
+ "bigint_factorial": {
+  "exit": 0,
+  "stdout": "8320987112741390144276341183223364380754172606361245952449277696409600000000000000\n1606938044258990275541962092341162602522202993782792835301376\n-1\n15511210043330985984000000!\n"
+ },
+ "break_continue": {
+  "exit": 0,
+  "stdout": "[\"00\", \"20\", \"22\", \"30\", \"32\", \"33\"]\n9\n"
+ },
+ "builtin_shadow": {
+  "exit": 0,
+  "stdout": "42\n5\ncustom 1\ntrue true true false\n"
+ },
+ "closures_counter": {
+  "exit": 0,
+  "stdout": "12 13 13\n1 13\n200\n"
+ },
+ "closures_loop_capture": {
+  "exit": 0,
+  "stdout": "[0, 1, 4, 9]\n0 1 2\n3 3\n"
+ },
+ "comments_whitespace": {
+  "exit": 0,
+  "stdout": "[1, 2, 3] {\"x\": 1, \"y\": 2}\nspaced\n# not a comment\n3\n"
+ },
+ "display_nested": {
+  "exit": 0,
+  "stdout": "[1, \"a\", [true, nil], {}, []]\n{\"k\": \"v\", 2: [3, \"x\"], true: nil, nil: false}\n[\"q\\\"uote\", \"new\\nline\", \"t\\tab\", \"b\\\\s\"]\n{\"nested\": {\"deeper\": [\"s\"]}}\n[1, 2]{\"a\": \"b\"}\n[[], [[]], [[], []]]\n"
+ },
+ "empty_ish": {
+  "exit": 0,
+  "stdout": ""
+ },
+ "equality_functions": {
+  "exit": 0,
+  "stdout": "true false true true false true false\n"
+ },
+ "err_arity": {
+  "exit": 1,
+  "stdout": "3\nruntime error: arity mismatch\n"
+ },
+ "err_arity_builtin": {
+  "exit": 1,
+  "stdout": "2\nruntime error: arity mismatch\n"
+ },
+ "err_assign_undefined": {
+  "exit": 1,
+  "stdout": "rhs evaluated\nruntime error: undefined variable: local\n"
+ },
+ "err_bool_arith": {
+  "exit": 1,
+  "stdout": "true\nruntime error: type error\n"
+ },
+ "err_chained_cmp": {
+  "exit": 1,
+  "stdout": "true\nruntime error: type error\n"
+ },
+ "err_compare_mixed": {
+  "exit": 1,
+  "stdout": "true\nruntime error: type error\n"
+ },
+ "err_custom": {
+  "exit": 1,
+  "stdout": "before\n1\nruntime error: value too large: 5\n"
+ },
+ "err_div_zero": {
+  "exit": 1,
+  "stdout": "2\nruntime error: division by zero\n"
+ },
+ "err_for_int": {
+  "exit": 1,
+  "stdout": "1\nruntime error: type error\n"
+ },
+ "err_index_range": {
+  "exit": 1,
+  "stdout": "3\nruntime error: index out of range\n"
+ },
+ "err_index_type": {
+  "exit": 1,
+  "stdout": "1\nruntime error: type error\n"
+ },
+ "err_invalid_int": {
+  "exit": 1,
+  "stdout": "12\nruntime error: invalid int\n"
+ },
+ "err_invalid_int_dash": {
+  "exit": 1,
+  "stdout": "runtime error: invalid int\n"
+ },
+ "err_join_type": {
+  "exit": 1,
+  "stdout": "a\nruntime error: type error\n"
+ },
+ "err_key_not_found": {
+  "exit": 1,
+  "stdout": "1\nruntime error: key not found\n"
+ },
+ "err_mod_zero": {
+  "exit": 1,
+  "stdout": "2\nruntime error: division by zero\n"
+ },
+ "err_neg_string": {
+  "exit": 1,
+  "stdout": "-5\nruntime error: type error\n"
+ },
+ "err_not_callable": {
+  "exit": 1,
+  "stdout": "calling\nruntime error: not callable\n"
+ },
+ "err_ord_len": {
+  "exit": 1,
+  "stdout": "120\nruntime error: type error\n"
+ },
+ "err_pop_empty": {
+  "exit": 1,
+  "stdout": "1\nruntime error: pop from empty list\n"
+ },
+ "err_program_calc": {
+  "exit": 1,
+  "stdout": "1 + 2 * 3 = 7\n(1 + 2) * 3 = 9\n100 / 7 - -3 = 17\n2 * (3 + (4 - 1)) / 2 = 6\n99999999999 * 99999999999 = 9999999999800000000001\nruntime error: division by zero\n"
+ },
+ "err_slice_bounds": {
+  "exit": 1,
+  "stdout": "[2]\nruntime error: index out of range\n"
+ },
+ "err_string_index_assign": {
+  "exit": 1,
+  "stdout": "a\nruntime error: type error\n"
+ },
+ "err_type_add": {
+  "exit": 1,
+  "stdout": "okay\nruntime error: type error\n"
+ },
+ "err_undefined_var": {
+  "exit": 1,
+  "stdout": "1\nruntime error: undefined variable: missing_name\n"
+ },
+ "err_unhashable": {
+  "exit": 1,
+  "stdout": "{\"ok\": 1}\nruntime error: unhashable key\n"
+ },
+ "eval_order": {
+  "exit": 0,
+  "stdout": "t 1\nt 2\nt 3\n7\nt <fn three>\nt a\nt b\nt c\n[\"a\", \"b\", \"c\"]\nt k1\nt v1\nt k2\nt v2\nt [0, 0]\nt 1\nt val\n[0, \"val\"]\nt nil\nt 0\nt x\nx\n"
+ },
+ "for_snapshot": {
+  "exit": 0,
+  "stdout": "[1, 2, 3, 10, 20, 30]\na\nb\n[\"a\", \"b\", \"aa\", \"bb\"]\n[h][é][y]\n"
+ },
+ "higher_order": {
+  "exit": 0,
+  "stdout": "[0, 1, 4, 9, 16, 25]\n[0, 4, 16]\n55\n[1, 2, 0]\n4 <builtin len> <fn map> <fn>\nfunction function\n3!\n"
+ },
+ "iife_and_anon": {
+  "exit": 0,
+  "stdout": "iife 21\n1\n-8\n111\n"
+ },
+ "int_builtin": {
+  "exit": 0,
+  "stdout": "43 -17 7 5 0\n246913578024691357802469135780\n-5niltrue\ntrue\n"
+ },
+ "list_ops": {
+  "exit": 0,
+  "stdout": "[3, 1, 2] 4 9 [3, 1, 2]\n[3, 1, 2, \"shared\"]\n[3, 1, 2, \"shared\"] [3, 1, 2, \"shared\", 7, 8]\n[0, 1, 2, 3, 4] [2, 3, 4, 5] [] []\n[2, 3] [] ell\na-b-c  solo\n[\"a\", \"\", \"b\"] [\"\"] [\"a\", \"b\", \"c\"] [\"one\", \"two\"]\n[[0, 0], [5, 0]]\n"
+ },
+ "map_equality": {
+  "exit": 0,
+  "stdout": "true\ntrue false\ntrue\nfalse false false false false true\nfalse false true\ntrue true true true\n"
+ },
+ "map_nested_mutation": {
+  "exit": 0,
+  "stdout": "[{\"n\": 2}, {\"n\": 2}] {\"n\": 2}\n{0: {0: 0, 1: 1}, 1: {0: 2, 1: 3}}\n{\"n\": 2, \"added\": true}\n"
+ },
+ "maps_order": {
+  "exit": 0,
+  "stdout": "{\"b\": 10, \"a\": 2, \"c\": 3} [\"b\", \"a\", \"c\"] 3\n{1: \"int\", true: \"bool\", \"1\": \"str\", nil: \"nil\", false: \"f\", 0: \"zero\"} 6\nint bool str nil zero f\ntrue false false false\n{\"x\": 2, \"y\": 3}\n"
+ },
+ "mutual_recursion": {
+  "exit": 0,
+  "stdout": "true true false\n9\n"
+ },
+ "nested_functions_scope": {
+  "exit": 0,
+  "stdout": "10\nsecond\n"
+ },
+ "ord_chr": {
+  "exit": 0,
+  "stdout": "65 233 128512 a é 😀\nabcde 1 true\n"
+ },
+ "perf_bigint": {
+  "exit": 0,
+  "stdout": "615 2466\n434665576869374 209\n"
+ },
+ "perf_fib": {
+  "exit": 0,
+  "stdout": "46368\n"
+ },
+ "perf_sieve": {
+  "exit": 0,
+  "stdout": "9592 99991\n"
+ },
+ "perf_sort": {
+  "exit": 0,
+  "stdout": "true 6 99992 317339954\n"
+ },
+ "perf_strings": {
+  "exit": 0,
+  "stdout": "16714 {\"alpha\": 857, \"beta\": 1285, \"gamma\": 429, \"delta\": 429}\n ateb ahpla ateb ahp\n"
+ },
+ "print_forms": {
+  "exit": 0,
+  "stdout": "\na 1 nil [nil] true\n\n   \n"
+ },
+ "program_bfs": {
+  "exit": 0,
+  "stdout": "start [0, 0] goal [4, 9] steps 17 visited 32\n"
+ },
+ "recursion_deep": {
+  "exit": 0,
+  "stdout": "500500\n900\n"
+ },
+ "return_nil": {
+  "exit": 0,
+  "stdout": "nil nil yes nil\n\nnil nil\n"
+ },
+ "scopes_shadow": {
+  "exit": 0,
+  "stdout": "2\n3\n3\n1\n10\n6 5\n10\n9\n8\n"
+ },
+ "string_compare": {
+  "exit": 0,
+  "stdout": "true true true true true true\ntrue true false\n[\"Apple\", \"apple\", \"fig\", \"pear\"]\n"
+ },
+ "strings_basic": {
+  "exit": 0,
+  "stdout": "héllo, wörld 12 é d\nabcd  0\ntab\there quote\"in back\\slash\nline1\nline2\nhéllo true\n本 3\n"
+ },
+ "syn_bad_assign_target": {
+  "exit": 2,
+  "stdout": null
+ },
+ "syn_bad_char": {
+  "exit": 2,
+  "stdout": null
+ },
+ "syn_bad_escape": {
+  "exit": 2,
+  "stdout": null
+ },
+ "syn_break_in_fn": {
+  "exit": 2,
+  "stdout": null
+ },
+ "syn_dup_params": {
+  "exit": 2,
+  "stdout": null
+ },
+ "syn_keyword_ident": {
+  "exit": 2,
+  "stdout": null
+ },
+ "syn_malformed_number": {
+  "exit": 2,
+  "stdout": null
+ },
+ "syn_missing_semicolon": {
+  "exit": 2,
+  "stdout": null
+ },
+ "syn_newline_in_string": {
+  "exit": 2,
+  "stdout": null
+ },
+ "syn_return_toplevel": {
+  "exit": 2,
+  "stdout": null
+ },
+ "syn_unclosed_block": {
+  "exit": 2,
+  "stdout": null
+ },
+ "syn_unterminated_string": {
+  "exit": 2,
+  "stdout": null
+ },
+ "truthiness": {
+  "exit": 0,
+  "stdout": "bool falsy\nnil falsy\nint falsy\nstring falsy\nlist falsy\nmap falsy\nbool truthy\nint truthy\nint truthy\nstring truthy\nstring truthy\nlist truthy\nmap truthy\nfunction truthy\ntrue false false true\n"
+ },
+ "type_builtin": {
+  "exit": 0,
+  "stdout": "int int string bool nil list map function function\nnil function string\n"
+ }
+}
